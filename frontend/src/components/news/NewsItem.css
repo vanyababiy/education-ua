@@ -1,0 +1,16 @@
+.news-form {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+
+.news-form__form {
+}
+
+.news-form__add-button,
+.news-form__submit {
+  border: none;
+  width: 10vw;
+  height: 2rem;
+  margin: 0 10vw;
+}

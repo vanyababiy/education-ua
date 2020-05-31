@@ -5,25 +5,26 @@ import {
   // Link,
   Redirect,
   Switch,
-  Link,
+  // Link,
 } from "react-router-dom";
+
 import Users from "./pages/user/Users";
+import NewsItem from "./components/news/NewsItem";
 
 const App = () => {
   return (
     <Router>
-      <Switch>
-        <Route path="/" exact>
-          <h1>Головна сторінка</h1>
-          <Link to="/users">
-            <h1>ЮЗЕРИ</h1>
-          </Link>
-        </Route>
-        <Route path="/users" exact>
-          <Users />
-        </Route>
-        <Redirect to="/" />
-      </Switch>
+      <main>
+        <Switch>
+          <Route path="/" exact>
+            <NewsItem />
+          </Route>
+          <Route path="/users" exact>
+            <Users />
+          </Route>
+          <Redirect to="/" />
+        </Switch>
+      </main>
     </Router>
   );
 };

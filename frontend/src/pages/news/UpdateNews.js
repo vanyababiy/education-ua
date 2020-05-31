@@ -2,6 +2,8 @@ import React from "react";
 
 import "./UpdateNews.css";
 
-const UpdateNews = () => {};
+const UpdateNews = () => {
+    
+};
 
 export default UpdateNews;
