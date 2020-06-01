@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 
 import Users from "./pages/user/Users";
-import NewsItem from "./components/news/NewsItem";
+import NewNews from "./pages/news/NewNews";
 
 const App = () => {
   return (
@@ -17,10 +17,10 @@ const App = () => {
       <main>
         <Switch>
           <Route path="/" exact>
-            <NewsItem />
-          </Route>
-          <Route path="/users" exact>
             <Users />
+          </Route>
+          <Route path="/news/new" exact>
+            <NewNews />
           </Route>
           <Redirect to="/" />
         </Switch>
