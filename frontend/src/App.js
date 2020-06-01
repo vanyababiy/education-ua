@@ -2,30 +2,36 @@ import React from "react";
 import {
   BrowserRouter as Router,
   Route,
-  // Link,
   Redirect,
   Switch,
-  // Link,
 } from "react-router-dom";
+import { ThemeProvider, CSSReset, Box, Heading } from "@chakra-ui/core";
 
-import Users from "./pages/user/Users";
 import NewNews from "./pages/news/NewNews";
 
 const App = () => {
   return (
-    <Router>
-      <main>
+    <ThemeProvider >
+      <CSSReset />
+      <Router>
         <Switch>
           <Route path="/" exact>
-            <Users />
+            <Box>
+              <Heading color="gray.900" textAlign="center">
+                Головна сторінка
+                <span role="img" aria-label="logo">
+                  ⚡️
+                </span>
+              </Heading>
+            </Box>
           </Route>
           <Route path="/news/new" exact>
             <NewNews />
           </Route>
           <Redirect to="/" />
         </Switch>
-      </main>
-    </Router>
+      </Router>
+    </ThemeProvider>
   );
 };
 
