@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Text, Textarea } from "@chakra-ui/core";
+import Dante from "Dante2";
 
 import "./NewNews.css";
 
 const NewNews = (props) => {
   let [scrollHeight, setScrollHeight] = useState(0);
-  let [scriptString, setScriptString] = useState("");
+  // let [scriptString, setScriptString] = useState("");
 
   const handleChangeHeight = (e) => {
     e.preventDefault();
@@ -15,30 +16,30 @@ const NewNews = (props) => {
     setScrollHeight({ value: t.value });
   };
 
+  //return the caret position of the textarea
   HTMLTextAreaElement.prototype.getCaretPosition = function () {
-    //return the caret position of the textarea
     return this.selectionStart;
   };
+  //change the caret position of the textarea
   HTMLTextAreaElement.prototype.setCaretPosition = function (position) {
-    //change the caret position of the textarea
     this.selectionStart = position;
     this.selectionEnd = position;
     this.focus();
   };
+  //if the textarea has selection then return true
   HTMLTextAreaElement.prototype.hasSelection = function () {
-    //if the textarea has selection then return true
     if (this.selectionStart === this.selectionEnd) {
       return false;
     } else {
       return true;
     }
   };
+  //return the selection text
   HTMLTextAreaElement.prototype.getSelectedText = function () {
-    //return the selection text
     return this.value.substring(this.selectionStart, this.selectionEnd);
   };
+  //change the selection area of the textarea
   HTMLTextAreaElement.prototype.setSelection = function (start, end) {
-    //change the selection area of the textarea
     this.selectionStart = start;
     this.selectionEnd = end;
     this.focus();
@@ -47,9 +48,9 @@ const NewNews = (props) => {
   var textarea = document.getElementsByTagName("textarea")[0];
 
   const handleTabPressed = (event) => {
+    //tab was pressed
     if (event.keyCode === 9) {
       event.preventDefault();
-      //tab was pressed
       var newCaretPosition;
       newCaretPosition = textarea.getCaretPosition() + "    ".length;
       textarea.value =
@@ -62,8 +63,8 @@ const NewNews = (props) => {
       textarea.setCaretPosition(newCaretPosition);
       return false;
     }
+    //backspace
     if (event.keyCode === 8) {
-      //backspace
       if (
         textarea.value.substring(
           textarea.getCaretPosition() - 4,
@@ -82,9 +83,9 @@ const NewNews = (props) => {
         textarea.setCaretPosition(newCaretPosition);
       }
     }
+    //left arrow
     if (event.keyCode === 37) {
       event.preventDefault();
-      //left arrow
       var newCaretPosition;
       if (
         textarea.value.substring(
@@ -98,9 +99,9 @@ const NewNews = (props) => {
       }
     }
 
+    //right arrow
     if (event.keyCode === 39) {
       event.preventDefault();
-      //right arrow
       var newCaretPosition;
       if (
         textarea.value.substring(
@@ -130,6 +131,7 @@ const NewNews = (props) => {
               ⚡️
             </span>
           </Text>
+
           <Textarea
             focusBorderColor="0"
             fontSize={["sm", "md", "lg", "xl"]}
@@ -139,7 +141,11 @@ const NewNews = (props) => {
             onKeyDown={handleTabPressed}
             className="news-container__element"
             borderStyle="none"
-          />
+          ></Textarea>
+          <Dante>
+            <textarea></textarea>
+          </Dante>
+          <Dante content={null} tooltips={[]} />
         </div>
       </div>
     </React.Fragment>
