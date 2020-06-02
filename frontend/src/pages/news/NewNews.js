@@ -4,7 +4,7 @@ import { Text, Textarea } from "@chakra-ui/core";
 import "./NewNews.css";
 
 const NewNews = (props) => {
-  let [scrollHeight, setScrollHeight] = useState(6);
+  let [scrollHeight, setScrollHeight] = useState(0);
   let [scriptString, setScriptString] = useState("");
 
   const handleChangeHeight = (e) => {
@@ -117,24 +117,31 @@ const NewNews = (props) => {
 
   return (
     <React.Fragment>
-      <Text
-        color="gray.600"
-        fontSize="2rem"
-        fontWeight="700"
-        textAlign="center"
-      >
-        Новини
-        <span role="img" aria-label="logo">
-          ⚡️
-        </span>
-      </Text>
-      <Textarea
-        placeholder="Here is a sample placeholder"
-        border="none"
-        height="auto"
-        onChange={handleChangeHeight}
-        onKeyDown={handleTabPressed}
-      />
+      <div className="news-container">
+        <div className="news-container__content">
+          <Text
+            color="gray.600"
+            fontSize="2rem"
+            fontWeight="700"
+            textAlign="center"
+          >
+            Новини
+            <span role="img" aria-label="logo">
+              ⚡️
+            </span>
+          </Text>
+          <Textarea
+            focusBorderColor="0"
+            fontSize={["sm", "md", "lg", "xl"]}
+            placeholder="Напишіть свою новину..."
+            height="auto"
+            onChange={handleChangeHeight}
+            onKeyDown={handleTabPressed}
+            className="news-container__element"
+            borderStyle="none"
+          />
+        </div>
+      </div>
     </React.Fragment>
   );
 };

@@ -1,0 +1,13 @@
+.news-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.news-container__content {
+  width: 55%;
+  display: flex;
+  flex-direction: column;
+}
+
