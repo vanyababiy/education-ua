@@ -4,9 +4,6 @@
   flex-direction: column;
 }
 
-.news-form__form {
-}
-
 .news-form__add-button,
 .news-form__submit {
   border: none;
