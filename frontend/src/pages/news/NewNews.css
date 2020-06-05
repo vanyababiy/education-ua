@@ -11,3 +11,12 @@
   flex-direction: column;
 }
 
+.odd {
+  display: flex;
+  flex-direction: row;
+}
+
+.rah-static {
+  width: 100%;
+  padding: 0 .5vw;
+}
