@@ -4,9 +4,8 @@ import {
   Route,
   Redirect,
   Switch,
-  Link,
 } from "react-router-dom";
-import { ThemeProvider, CSSReset, Box, Heading, Button } from "@chakra-ui/core";
+import { ThemeProvider, CSSReset, Box, Heading } from "@chakra-ui/core";
 
 import NewNews from "./pages/news/NewNews";
 import Users from "./pages/user/Users";
@@ -28,9 +27,6 @@ const App = () => {
                     ⚡️
                   </span>
                 </Heading>
-                <Button variant="outline">
-                  <Link to="/news/new">НОВИНИ</Link>
-                </Button>
               </Box>
             </Route>
             <Route path="/news/new" exact>
