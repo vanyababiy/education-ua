@@ -1,12 +1,6 @@
 import React, { useState } from "react";
-import {
-  Text,
-  Input,
-  IconButton,
-  Icon,
-  Collapse,
-  Button,
-} from "@chakra-ui/core";
+import { Text, Collapse, Button } from "@chakra-ui/core";
+import Dante from "Dante2";
 
 import "./NewNews.css";
 import TextareaElement from "../../shared/components/FormElements/TextareaElement";
@@ -45,30 +39,11 @@ const NewNews = () => {
           <TextareaElement
             startingHeight={0}
             isOpen={show}
-            weight={400}
+            weight={300}
             size={["3sm", "3md", "3lg", "3xl"]}
             placeholder="Напишіть свій заголовок..."
           />
-          <div className="odd">
-            <Button
-              size="sm"
-              onClick={handleToggle}
-              mt="1rem"
-              isInline
-              isLoading={isLoad}
-            ></Button>
-            <Collapse startingHeight={0} isOpen={show}>
-              <TextareaElement
-                startingHeight={0}
-                isOpen={show}
-                weight={400}
-                w="100%"
-                size={["1.5sm", "1.5md", "1.5lg", "1.5xl"]}
-                placeholder="Напишіть свою новину..."
-              />
-            </Collapse>
-          </div>
-          <Button onClick={getInfo}>text</Button>
+          <Dante></Dante>
         </div>
       </div>
     </React.Fragment>

@@ -7,7 +7,7 @@
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
     "@tinymce/tinymce-react": "^3.6.0",
-    "dante": "^1.0.2",
+    "Dante2": "^0.5.0-rc4",
     "emotion-theming": "^10.0.27",
     "flat-color-icons": "^1.1.0",
     "formik": "^2.1.4",

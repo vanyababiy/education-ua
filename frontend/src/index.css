@@ -12,6 +12,10 @@ body {
   margin: 0;
 }
 
+main {
+  position: relative;
+}
+
 .slide-in-left-enter {
   transform: translateX(-100%);
 }
