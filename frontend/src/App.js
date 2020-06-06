@@ -35,6 +35,7 @@ const App = () => {
             <Route path="/users">
               <Users />
             </Route>
+
             <Redirect to="/" />
           </Switch>
         </main>
