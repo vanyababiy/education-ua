@@ -4,14 +4,15 @@
   background: transparent;
   border: none;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
   margin-right: 2rem;
   cursor: pointer;
 }
 
 .main-navigation__menu-btn span {
-  display: block;
+  display: flex;
+  flex-direction: row;
   width: 3rem;
   height: 2.5px;
   background: white;
