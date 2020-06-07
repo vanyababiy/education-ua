@@ -19,10 +19,13 @@
 }
 
 .main-navigation__title {
+  width: 100%;
   color: black;
 }
 
 .main-navigation__title a {
+  display: flex;
+  justify-content: center;
   text-decoration: none;
   color: black;
 }
@@ -41,6 +44,9 @@
   }
 
   .main-navigation__header-nav {
-    display: block;
+    display: flex;
+    flex-direction: row;
+    height: 2rem;
+    width: 100%;
   }
 }

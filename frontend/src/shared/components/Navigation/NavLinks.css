@@ -11,7 +11,7 @@
 }
 
 .nav-links li {
-  margin: 1rem;
+  /* margin: 1rem; */
 }
 
 .nav-links a {
@@ -19,13 +19,16 @@
   color: #292929;
   text-decoration: none;
   padding: 0.5rem;
+  font-size: calc(0.6rem + 0.4vw);
 }
 
 .nav-links a:hover,
 .nav-links a:active,
 .nav-links a.active {
-  background: #f8df00;
-  border-color: #292929;
+  /* background: #f8df00; */
+  /* border-color: #292929; */
+  text-decoration: underline;
+  font-weight: 400;
   color: #292929;
 }
 
