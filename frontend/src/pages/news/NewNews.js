@@ -27,7 +27,7 @@ const NewNews = () => {
         <div className="news-container__content">
           <Text
             color="gray.600"
-            fontSize={["2sm", "2md", "2lg", "2xl"]}
+            fontSize={["4sm", "4md", "4lg", "4xl"]}
             fontWeight="700"
             textAlign="center"
           >
@@ -40,7 +40,7 @@ const NewNews = () => {
             startingHeight={0}
             isOpen={show}
             weight={300}
-            size={["3sm", "3md", "3lg", "3xl"]}
+            size={["5sm", "5md", "5lg", "5xl"]}
             placeholder="Напишіть свій заголовок..."
           />
           <Dante></Dante>

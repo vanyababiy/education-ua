@@ -10,6 +10,7 @@ import { ThemeProvider, CSSReset, Box, Heading } from "@chakra-ui/core";
 import NewNews from "./pages/news/NewNews";
 import Users from "./pages/user/Users";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
+import Auth from "./pages/user/Auth";
 
 const App = () => {
   return (
@@ -34,6 +35,9 @@ const App = () => {
             </Route>
             <Route path="/users">
               <Users />
+            </Route>
+            <Route path="/auth">
+              <Auth />
             </Route>
 
             <Redirect to="/" />
