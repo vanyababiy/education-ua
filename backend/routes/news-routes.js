@@ -2,9 +2,19 @@ const express = require("express");
 
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
-  console.log("GET Request in News");
-  res.json({ message: "It works!" });
+const DUMMY_NEWS = [
+  {
+    id: "n1",
+    title: "Get up early!",
+    description: "WOOOOW",
+    creator: "u1",
+  },
+];
+
+router.get("/news/:nId", (req, res, next) => {
+  const NewsId = req.params.nId;
+  const news = DUMMY_NEWS.find((n) => n.id === NewsId);
+  res.json({ news });
 });
 
 module.exports = router;

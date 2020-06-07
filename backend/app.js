@@ -5,6 +5,6 @@ const newsRoutes = require("./routes/news-routes");
 
 const app = express();
 
-app.use(newsRoutes);
+app.use("/", newsRoutes);
 
 app.listen(5000);
