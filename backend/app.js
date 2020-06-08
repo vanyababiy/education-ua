@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
 const newsRoutes = require("./routes/news-routes");
 const usersRoutes = require("./routes/users-routes");
@@ -27,4 +28,12 @@ app.use((error, req, res, next) => {
     .json({ message: error.message || "Невідома помилка" });
 });
 
-app.listen(5000);
+mongoose
+  .connect(
+    "mongodb+srv://babiy:dktEUKXOs7GsiJaY@education-ua-yzfgr.mongodb.net/news?retryWrites=true&w=majority",
+    { useUnifiedTopology: true, useNewUrlParser: true }
+  )
+  .then(() => app.listen(5000))
+  .catch((err) => {
+    console.log(err);
+  });
