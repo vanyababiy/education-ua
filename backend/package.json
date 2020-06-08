@@ -13,6 +13,7 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
+    "express-validator": "^6.5.0",
     "uuid-v4": "^0.1.0"
   },
   "devDependencies": {
