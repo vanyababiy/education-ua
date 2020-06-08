@@ -5,6 +5,7 @@ const { validationResult } = require("express-validator");
 const uuid = require("uuid-v4");
 
 const HttpError = require("../models/http-error");
+const News = require("../models/news");
 
 let DUMMY_NEWS = [
   {
@@ -31,14 +32,14 @@ const getNewsById = (req, res, next) => {
 };
 
 const getAllNews = (req, res, next) => {
-  const news = DUMMY_NEWS.map((place) => place);
+  const news = DUMMY_NEWS.map((news) => news);
   if (!news) {
-    throw new HttpError("Неможливо знайти таку новину.", 404);
+    throw new HttpError("Неможливо знайти такі новини.", 404);
   }
   res.json({ news });
 };
 
-const createNews = (req, res, next) => {
+const createNews = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     throw new HttpError("Неправильно введені дані, перевірте ще раз.", 422);
@@ -46,14 +47,20 @@ const createNews = (req, res, next) => {
 
   const { title, description, creator } = req.body;
 
-  const createdNews = {
-    id: uuid(),
+  const createdNews = new News({
     title,
     description,
     creator,
-  };
-
-  DUMMY_NEWS.push(createdNews);
+  });
+  try {
+    await createdNews.save();
+  } catch (err) {
+    const error = new HttpError(
+      "Створення новини не відбулось, попробуйте ще раз.",
+      500
+    );
+    return next(error);
+  }
 
   res.status(201).json({ news: createdNews });
 };
