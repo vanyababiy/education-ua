@@ -5,6 +5,8 @@ const newsRoutes = require("./routes/news-routes");
 
 const app = express();
 
+app.use(bodyParser.json());
+
 app.use("/", newsRoutes);
 
 app.use((error, req, res, next) => {
