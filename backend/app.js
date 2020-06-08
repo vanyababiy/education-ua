@@ -2,12 +2,18 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const newsRoutes = require("./routes/news-routes");
+const HttpError = require("./models/http-error");
 
 const app = express();
 
 app.use(bodyParser.json());
 
 app.use("/", newsRoutes);
+
+app.use((req, res, next) => {
+  const error = new HttpError("Не можливо віднайти такий шлях.");
+  throw error;
+});
 
 app.use((error, req, res, next) => {
   if (res.headerSent) {

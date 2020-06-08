@@ -50,6 +50,25 @@ const createNews = (req, res, next) => {
   res.status(201).json({ news: createdNews });
 };
 
+const updateNews = (req, res, next) => {
+  const { title, description } = req.body;
+  const newsId = req.params.nId;
+
+  const updatedNews = { ...DUMMY_NEWS.find((p) => p.id === newsId) };
+  const newsIndex = DUMMY_NEWS.findIndex((p) => p.id === newsId);
+
+  updatedNews.title = title;
+  updatedNews.description = description;
+
+  DUMMY_NEWS[newsIndex] = updatedNews;
+
+  res.status(200).json({ news: updatedNews });
+};
+
+const deleteNews = (req, res, next) => {};
+
 exports.getNewsById = getNewsById;
 exports.getAllNews = getAllNews;
 exports.createNews = createNews;
+exports.updateNews = updateNews;
+exports.deleteNews = deleteNews;
