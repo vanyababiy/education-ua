@@ -1,5 +1,7 @@
 const express = require("express");
 
+const { validationResult } = require("express-validator");
+
 const uuid = require("uuid-v4");
 
 const HttpError = require("../models/http-error");
@@ -37,7 +39,14 @@ const getAllNews = (req, res, next) => {
 };
 
 const createNews = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    console.log(errors);
+    throw new HttpError("Неправильно введені дані, перевірте ще раз.", 422);
+  }
+
   const { title, description, creator } = req.body;
+
   const createdNews = {
     id: uuid(),
     title,
