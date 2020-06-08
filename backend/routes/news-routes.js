@@ -4,14 +4,14 @@ const newsControllers = require("../controllers/news-controllers");
 
 const router = express.Router();
 
-router.get("/news/:nId", newsControllers.getNewsById);
+router.get("/:nId", newsControllers.getNewsById);
 
-router.patch("/news/:nId", newsControllers.updateNews);
+router.patch("/:nId", newsControllers.updateNews);
 
-router.delete("/news/:nId", newsControllers.deleteNews);
+router.delete("/:nId", newsControllers.deleteNews);
 
-router.get("/news/", newsControllers.getAllNews);
+router.get("/", newsControllers.getAllNews);
 
-router.post("/news", newsControllers.createNews);
+router.post("/", newsControllers.createNews);
 
 module.exports = router;
