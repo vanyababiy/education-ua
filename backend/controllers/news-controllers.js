@@ -41,7 +41,6 @@ const getAllNews = (req, res, next) => {
 const createNews = (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.log(errors);
     throw new HttpError("Неправильно введені дані, перевірте ще раз.", 422);
   }
 
@@ -60,6 +59,11 @@ const createNews = (req, res, next) => {
 };
 
 const updateNews = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    throw new HttpError("Неправильно введені дані, перевірте ще раз.", 422);
+  }
+
   const { title, description } = req.body;
   const newsId = req.params.nId;
 

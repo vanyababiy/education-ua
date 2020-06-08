@@ -7,7 +7,11 @@ const router = express.Router();
 
 router.get("/:nId", newsControllers.getNewsById);
 
-router.patch("/:nId", newsControllers.updateNews);
+router.patch(
+  "/:nId",
+  [check("title").not().isEmpty(), check("description").not().isEmpty()],
+  newsControllers.updateNews
+);
 
 router.post(
   "/",
