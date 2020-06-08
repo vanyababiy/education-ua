@@ -4,7 +4,7 @@ const uuid = require("uuid-v4");
 
 const HttpError = require("../models/http-error");
 
-const DUMMY_NEWS = [
+let DUMMY_NEWS = [
   {
     id: "n1",
     title: "Get up early!",
@@ -54,8 +54,8 @@ const updateNews = (req, res, next) => {
   const { title, description } = req.body;
   const newsId = req.params.nId;
 
-  const updatedNews = { ...DUMMY_NEWS.find((p) => p.id === newsId) };
-  const newsIndex = DUMMY_NEWS.findIndex((p) => p.id === newsId);
+  const updatedNews = { ...DUMMY_NEWS.find((n) => n.id === newsId) };
+  const newsIndex = DUMMY_NEWS.findIndex((n) => n.id === newsId);
 
   updatedNews.title = title;
   updatedNews.description = description;
@@ -65,7 +65,17 @@ const updateNews = (req, res, next) => {
   res.status(200).json({ news: updatedNews });
 };
 
-const deleteNews = (req, res, next) => {};
+const deleteNews = (req, res, next) => {
+  const newsId = req.params.nId;
+
+  DUMMY_NEWS = DUMMY_NEWS.filter((n) => n.id !== newsId);
+  const isFind = DUMMY_NEWS.find((n) => n.id == newsId);
+  if (!isFind) {
+    throw new HttpError("Неможливо знайти таку новину.", 404);
+  }
+
+  res.status(200).send({ message: "Новину видалено." });
+};
 
 exports.getNewsById = getNewsById;
 exports.getAllNews = getAllNews;
