@@ -6,21 +6,6 @@ const HttpError = require("../models/http-error");
 const News = require("../models/news");
 const User = require("../models/user");
 
-let DUMMY_NEWS = [
-  {
-    id: "n1",
-    title: "Get up early!",
-    description: "WOOOOW",
-    creator: "u1",
-  },
-  {
-    id: "n2",
-    title: "Get up early!",
-    description: "WOO2OOW",
-    creator: "u2",
-  },
-];
-
 const getNewsById = async (req, res, next) => {
   const newsId = req.params.nId;
 
@@ -152,9 +137,9 @@ const updateNews = async (req, res, next) => {
 const deleteNews = async (req, res, next) => {
   const newsId = req.params.nId;
 
-  let news;
+  let oneNews;
   try {
-    news = await News.findById(newsId);
+    oneNews = await News.findById(newsId).populate("creator");
   } catch (err) {
     const error = new HttpError(
       "Неможливо знайти таку новину, попробуйте ще раз.",
@@ -163,8 +148,21 @@ const deleteNews = async (req, res, next) => {
     return next(error);
   }
 
+  if (!oneNews) {
+    const error = new HttpError(
+      "Неможливо знайти таку новину, попробуйте ще раз.",
+      404
+    );
+    return next(error);
+  }
+
   try {
-    await news.remove();
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await oneNews.remove({ session: sess });
+    await oneNews.creator.news.pull(oneNews);
+    await oneNews.creator.save({ session: sess });
+    await sess.commitTransaction();
   } catch (err) {
     const error = new HttpError(
       "Щось пішло не так, неможливо здійснити операцію видалення новинми.",
