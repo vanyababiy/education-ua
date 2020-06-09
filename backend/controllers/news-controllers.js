@@ -22,21 +22,43 @@ let DUMMY_NEWS = [
   },
 ];
 
-const getNewsById = (req, res, next) => {
-  const NewsId = req.params.nId;
-  const news = DUMMY_NEWS.find((n) => n.id === NewsId);
-  if (!news) {
-    throw new HttpError("Неможливо знайти таку новину.", 404);
+const getNewsById = async (req, res, next) => {
+  const newsId = req.params.nId;
+
+  let news;
+  try {
+    news = await News.findById(newsId);
+  } catch (err) {
+    const error = new HttpError(
+      "Щось пішло не так, неможливо знайти новину.",
+      500
+    );
+    return next(error);
   }
-  res.json({ news });
+  if (!news) {
+    const error = new HttpError("Неможливо знайти таку новину.", 404);
+    return next(error);
+  }
+  res.json({ news: news.toObject({ getters: true }) });
 };
 
-const getAllNews = (req, res, next) => {
-  const news = DUMMY_NEWS.map((news) => news);
-  if (!news) {
-    throw new HttpError("Неможливо знайти такі новини.", 404);
+const getAllNews = async (req, res, next) => {
+  let news;
+  try {
+    news = await News.find((news) => news);
+  } catch (err) {
+    const error = new HttpError(
+      "Щось пішло не так, неможливо знайти новини.",
+      500
+    );
+    return next(error);
   }
-  res.json({ news });
+
+  if (!news) {
+    const error = new HttpError("Неможливо знайти такі новини.", 404);
+    return next(error);
+  }
+  res.json({ news: news.map((news) => news.toObject({ getters: true })) });
 };
 
 const createNews = async (req, res, next) => {
@@ -89,7 +111,7 @@ const deleteNews = (req, res, next) => {
   const newsId = req.params.nId;
 
   DUMMY_NEWS = DUMMY_NEWS.filter((n) => n.id !== newsId);
-  const isFind = DUMMY_NEWS.find((n) => n.id == newsId);
+  const isFind = DUMMY_NEWS.find((n) => n.id === newsId);
   if (!isFind) {
     throw new HttpError("Неможливо знайти таку новину.", 404);
   }
