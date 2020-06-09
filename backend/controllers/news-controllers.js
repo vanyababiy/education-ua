@@ -1,11 +1,10 @@
 const express = require("express");
-
+const mongoose = require("mongoose");
 const { validationResult } = require("express-validator");
-
-const uuid = require("uuid-v4");
 
 const HttpError = require("../models/http-error");
 const News = require("../models/news");
+const User = require("../models/user");
 
 let DUMMY_NEWS = [
   {
@@ -74,8 +73,32 @@ const createNews = async (req, res, next) => {
     description,
     creator,
   });
+
+  let user;
   try {
-    await createdNews.save();
+    user = await User.findById(creator);
+  } catch (err) {
+    const error = new HttpError(
+      "Створення новини не відбулось, пробуйте ще раз.",
+      500
+    );
+    return next(error);
+  }
+
+  if (!user) {
+    const error = new HttpError("Не можливо знайти такого користувача", 404);
+    return next(error);
+  }
+
+  console.log(user);
+
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await createdNews.save({ session: sess });
+    user.news.push(createdNews);
+    await user.save({ session: sess });
+    await sess.commitTransaction();
   } catch (err) {
     const error = new HttpError(
       "Створення новини не відбулось, попробуйте ще раз.",
@@ -139,7 +162,7 @@ const deleteNews = async (req, res, next) => {
     );
     return next(error);
   }
-  
+
   try {
     await news.remove();
   } catch (err) {
