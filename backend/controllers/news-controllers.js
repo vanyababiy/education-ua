@@ -87,36 +87,70 @@ const createNews = async (req, res, next) => {
   res.status(201).json({ news: createdNews });
 };
 
-const updateNews = (req, res, next) => {
+const updateNews = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    throw new HttpError("Неправильно введені дані, перевірте ще раз.", 422);
+    const error = new HttpError(
+      "Неправильно введені дані, перевірте ще раз.",
+      422
+    );
+    return next(error);
   }
 
   const { title, description } = req.body;
   const newsId = req.params.nId;
 
-  const updatedNews = { ...DUMMY_NEWS.find((n) => n.id === newsId) };
-  const newsIndex = DUMMY_NEWS.findIndex((n) => n.id === newsId);
-
-  updatedNews.title = title;
-  updatedNews.description = description;
-
-  DUMMY_NEWS[newsIndex] = updatedNews;
-
-  res.status(200).json({ news: updatedNews });
-};
-
-const deleteNews = (req, res, next) => {
-  const newsId = req.params.nId;
-
-  DUMMY_NEWS = DUMMY_NEWS.filter((n) => n.id !== newsId);
-  const isFind = DUMMY_NEWS.find((n) => n.id === newsId);
-  if (!isFind) {
-    throw new HttpError("Неможливо знайти таку новину.", 404);
+  let news;
+  try {
+    news = await News.findById(newsId);
+  } catch (err) {
+    const error = new HttpError(
+      "Щось пішло не так, неможливо здійснити операцію оновлення.",
+      500
+    );
+    return next(error);
   }
 
-  res.status(200).send({ message: "Новину видалено." });
+  news.title = title;
+  news.description = description;
+  try {
+    await news.save();
+  } catch (err) {
+    const error = new HttpError(
+      "Щось пішло не так, неможливо здійснити операцію оновлення.",
+      500
+    );
+    return next(error);
+  }
+
+  res.status(200).json({ news: news.toObject({ getters: true }) });
+};
+
+const deleteNews = async (req, res, next) => {
+  const newsId = req.params.nId;
+
+  let news;
+  try {
+    news = await News.findById(newsId);
+  } catch (err) {
+    const error = new HttpError(
+      "Неможливо знайти таку новину, попробуйте ще раз.",
+      500
+    );
+    return next(error);
+  }
+  
+  try {
+    await news.remove();
+  } catch (err) {
+    const error = new HttpError(
+      "Щось пішло не так, неможливо здійснити операцію видалення новинми.",
+      500
+    );
+    return next(error);
+  }
+
+  res.status(200).send({ news: `Новину видалено.` });
 };
 
 exports.getNewsById = getNewsById;
