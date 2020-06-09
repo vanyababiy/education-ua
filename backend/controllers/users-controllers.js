@@ -2,60 +2,94 @@ const uuid = require("uuid-v4");
 const { validationResult } = require("express-validator");
 
 const HttpError = require("../models/http-error");
+const User = require("../models/user");
 
-const DUMMY_USERS = [
-  {
-    id: "u1",
-    name: "Management Youth Policy",
-    email: "education@gmail.com",
-    password: "12345678",
-  },
-];
+const getUsers = async (req, res, next) => {
+  let users;
+  try {
+    users = await User.find((news) => news);
+  } catch (err) {
+    const error = new HttpError(
+      "Щось пішло не так при отриманні списку користувачів, попробуйте ще раз.",
+      500
+    );
+    return next(error);
+  }
 
-const getUsers = (req, res, next) => {
-  res.json({ users: DUMMY_USERS });
+  res.json({ users: users.map((user) => user.toObject({ getters: true })) });
 };
 
-const signup = (req, res, next) => {
+const signup = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    throw new HttpError(
-      "Невірно введені дані, перевірте достовірність даних та попробуйте ввести ще раз",
-      422
+    return next(
+      new HttpError(
+        "Невірно введені дані, перевірте достовірність даних та попробуйте ввести ще раз",
+        422
+      )
     );
   }
 
   const { name, email, password } = req.body;
 
-  const hasUser = DUMMY_USERS.find((u) => u.email === email);
-
-  if (hasUser) {
-    throw new HttpError("Такий користувач уже існує.", 422);
+  let existingUser;
+  try {
+    existingUser = await User.findOne({ email: email });
+  } catch (err) {
+    const error = new HttpError(
+      "Щось пішло не так, реєстрація не є успішною, будь ласка, попробуй пізніше.",
+      500
+    );
+    return next(error);
   }
 
-  const createdUser = {
-    id: uuid(),
+  if (existingUser) {
+    const error = new HttpError(
+      "Такий користувач уже існує, попробуйте авторизуватись.",
+      422
+    );
+    return next(error);
+  }
+
+  const createdUser = new User({
     name,
     email,
     password,
-  };
+    news: [],
+  });
 
-  DUMMY_USERS.push(createdUser);
+  try {
+    await createdUser.save();
+  } catch (err) {
+    const error = new HttpError(
+      "Щось пішло не так, попробуйте здійснити реєстрацію ще раз.",
+      500
+    );
+    return next(error);
+  }
 
-  res.status(201).json({ user: createdUser });
+  res.status(201).json({ user: createdUser.toObject({ getters: true }) });
 };
 
-const login = (req, res, next) => {
+const login = async (req, res, next) => {
   const { email, password } = req.body;
 
-  const identifiedUser = DUMMY_USERS.find((user) => user.email === email);
-  if (!identifiedUser || identifiedUser.password !== password) {
+  let existingUser;
+  try {
+    existingUser = await User.findOne({ email: email });
+  } catch (err) {
     const error = new HttpError(
-      "Такого користувача не існує або ж невірно введені дані.",
-      401
+      "Щось пішло не так, попробуйте ще раз залогуватись.",
+      500
     );
-    throw error;
+    return next(error);
   }
+
+  if (!existingUser || existingUser.password !== password) {
+    const error = new HttpError("Невірний логін та пароль.", 401);
+    return next(error);
+  }
+
   res.json({ message: "Логування успішне!" });
 };
 

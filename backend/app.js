@@ -31,7 +31,7 @@ app.use((error, req, res, next) => {
 mongoose
   .connect(
     "mongodb+srv://babiy:dktEUKXOs7GsiJaY@education-ua-yzfgr.mongodb.net/news?retryWrites=true&w=majority",
-    { useUnifiedTopology: true, useNewUrlParser: true }
+    { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true }
   )
   .then(() => app.listen(5000))
   .catch((err) => {
