@@ -160,7 +160,7 @@ const deleteNews = async (req, res, next) => {
     const sess = await mongoose.startSession();
     sess.startTransaction();
     await oneNews.remove({ session: sess });
-    await oneNews.creator.news.pull(oneNews);
+    oneNews.creator.news.pull(oneNews);
     await oneNews.creator.save({ session: sess });
     await sess.commitTransaction();
   } catch (err) {
