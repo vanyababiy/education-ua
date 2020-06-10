@@ -41,16 +41,6 @@ const App = () => {
   } else {
     routes = (
       <Switch>
-        <Route path="/" exact>
-          <Box>
-            <Heading color="gray.900" textAlign="center">
-              Головна сторінка
-              <span role="img" aria-label="logo">
-                ⚡️
-              </span>
-            </Heading>
-          </Box>
-        </Route>
         <Route path="/auth">
           <Auth />
         </Route>
@@ -71,7 +61,19 @@ const App = () => {
         <Router>
           <MainNavigation />
           <main>
-            <Switch>{routes}</Switch>
+            <Switch>
+              <Route path="/" exact>
+                <Box>
+                  <Heading color="gray.900" textAlign="center">
+                    Головна сторінка
+                    <span role="img" aria-label="logo">
+                      ⚡️
+                    </span>
+                  </Heading>
+                </Box>
+              </Route>
+              {routes}
+            </Switch>
           </main>
         </Router>
       </AuthContext.Provider>
