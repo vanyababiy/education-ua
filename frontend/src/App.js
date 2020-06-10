@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useCallback } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -11,39 +11,70 @@ import NewNews from "./pages/news/NewNews";
 import Users from "./pages/user/Users";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import Auth from "./pages/user/Auth";
+import { AuthContext } from "./shared/context/auth-context";
 
 const App = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const login = useCallback(() => {
+    setIsLoggedIn(true);
+  }, []);
+
+  const logout = useCallback(() => {
+    setIsLoggedIn(false);
+  }, []);
+
+  let routes;
+
+  if (isLoggedIn) {
+    routes = (
+      <Switch>
+        <Route path="/news/new" exact>
+          <NewNews />
+        </Route>
+        <Route path="/users">
+          <Users />
+        </Route>
+        <Redirect to="/" />
+      </Switch>
+    );
+  } else {
+    routes = (
+      <Switch>
+        <Route path="/" exact>
+          <Box>
+            <Heading color="gray.900" textAlign="center">
+              Головна сторінка
+              <span role="img" aria-label="logo">
+                ⚡️
+              </span>
+            </Heading>
+          </Box>
+        </Route>
+        <Route path="/auth">
+          <Auth />
+        </Route>
+        <Route path="/users/signup">
+          <Auth />
+        </Route>
+        <Redirect to="/" />
+      </Switch>
+    );
+  }
+
   return (
     <ThemeProvider>
-      <CSSReset />
-      <Router>
-        <MainNavigation />
-        <main>
-          <Switch>
-            <Route path="/" exact>
-              <Box>
-                <Heading color="gray.900" textAlign="center">
-                  Головна сторінка
-                  <span role="img" aria-label="logo">
-                    ⚡️
-                  </span>
-                </Heading>
-              </Box>
-            </Route>
-            <Route path="/news/new" exact>
-              <NewNews />
-            </Route>
-            <Route path="/users">
-              <Users />
-            </Route>
-            <Route path="/auth">
-              <Auth />
-            </Route>
-
-            <Redirect to="/" />
-          </Switch>
-        </main>
-      </Router>
+      <AuthContext.Provider
+        value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
+      >
+        <CSSReset />
+        <Router>
+          <MainNavigation />
+          <main>
+            <Switch>{routes}</Switch>
+          </main>
+        </Router>
+      </AuthContext.Provider>
     </ThemeProvider>
   );
 };
