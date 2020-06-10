@@ -1,4 +1,3 @@
-const express = require("express");
 const mongoose = require("mongoose");
 const { validationResult } = require("express-validator");
 
@@ -74,8 +73,6 @@ const createNews = async (req, res, next) => {
     const error = new HttpError("Не можливо знайти такого користувача", 404);
     return next(error);
   }
-
-  console.log(user);
 
   try {
     const sess = await mongoose.startSession();
@@ -160,12 +157,13 @@ const deleteNews = async (req, res, next) => {
     const sess = await mongoose.startSession();
     sess.startTransaction();
     await oneNews.remove({ session: sess });
+    // await user.findOneAndUpdate({ news: newsId }, { news: [] }, { new: true });
     oneNews.creator.news.pull(oneNews);
     await oneNews.creator.save({ session: sess });
     await sess.commitTransaction();
   } catch (err) {
     const error = new HttpError(
-      "Щось пішло не так, неможливо здійснити операцію видалення новинми.",
+      "Щось пішло не так, неможливо здійснити операцію видалення новини.",
       500
     );
     return next(error);
