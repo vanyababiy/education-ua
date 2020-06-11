@@ -12,28 +12,35 @@ const NavLinks = (props) => {
       {auth.isLoggedIn && (
         <li>
           <NavLink to="/news/new" exact>
-            Новини
+            НОВИНИ
           </NavLink>
         </li>
       )}
       <li>
-        <NavLink to="/blogs">Блоги</NavLink>
+        <NavLink to="/blogs">БЛОГИ</NavLink>
       </li>
       <li>
-        <NavLink to="/volunteering">Волонтерство</NavLink>
+        <NavLink to="/volunteering">ВОЛОНТЕРСТВО</NavLink>
       </li>
       <li>
-        <NavLink to="/po">ГО для молоді</NavLink>
+        <NavLink to="/po">ГО ДЛЯ МОЛОДІ</NavLink>
       </li>
       <li>
-        <NavLink to="/about">Про нас</NavLink>
+        <NavLink to="/about">ПРО НАС</NavLink>
       </li>
       <li>
-        <NavLink to="/projects">Проекти</NavLink>
+        <NavLink to="/projects">ПРОЕКТИ</NavLink>
       </li>
       <li>
-        <NavLink to="/announcements">Анонси</NavLink>
+        <NavLink to="/announcements">АНОНСИ</NavLink>
       </li>
+      {auth.isLoggedIn && (
+        <li>
+          <NavLink to="/users" exact>
+            КОРИСТУВАЧІ
+          </NavLink>
+        </li>
+      )}
       {auth.isLoggedIn && (
         <li>
           {/* <button onClick={auth.logout}>ВИЙТИ</button> */}

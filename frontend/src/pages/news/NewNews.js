@@ -25,17 +25,6 @@ const NewNews = () => {
     <React.Fragment>
       <div className="news-container">
         <div className="news-container__content">
-          <Text
-            color="gray.600"
-            fontSize={["4sm", "4md", "4lg", "4xl"]}
-            fontWeight="700"
-            textAlign="center"
-          >
-            Новини
-            <span role="img" aria-label="logo">
-              ⚡️
-            </span>
-          </Text>
           <TextareaElement
             startingHeight={0}
             isOpen={show}

@@ -62,7 +62,7 @@ const App = () => {
           <MainNavigation />
           <main>
             <Switch>
-              <Route path="/" exact>
+              {/* <Route path="/" exact>
                 <Box>
                   <Heading color="gray.900" textAlign="center">
                     Головна сторінка
@@ -71,7 +71,7 @@ const App = () => {
                     </span>
                   </Heading>
                 </Box>
-              </Route>
+              </Route> */}
               {routes}
             </Switch>
           </main>
