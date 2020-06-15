@@ -89,7 +89,10 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
-  res.json({ message: "Логування успішне!" });
+  res.json({
+    message: "Логування успішне!",
+    user: existingUser.toObject({ getters: true }),
+  });
 };
 
 exports.getUsers = getUsers;
