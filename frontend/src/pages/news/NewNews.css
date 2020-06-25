@@ -8,6 +8,11 @@
 .news-container__content {
   display: flex;
   flex-direction: column;
+  width: 100%;
+}
+
+.news-container__text-element {
+  width: 100%;
 }
 
 .odd {

@@ -6,8 +6,6 @@ import ErrorModal from "../../shared/components/UIElements/ErrorModal";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 
 const Users = () => {
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [error, setError] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [loadedUsers, setLoadedUsers] = useState();
 

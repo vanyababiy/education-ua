@@ -12,16 +12,20 @@ import Users from "./pages/user/Users";
 import MainNavigation from "./shared/components/Navigation/MainNavigation";
 import Auth from "./pages/user/Auth";
 import { AuthContext } from "./shared/context/auth-context";
+import UpdateNews from "./pages/news/UpdateNews";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(false);
 
-  const login = useCallback(() => {
+  const login = useCallback((uid) => {
     setIsLoggedIn(true);
+    setUserId(uid);
   }, []);
 
   const logout = useCallback(() => {
     setIsLoggedIn(false);
+    setUserId(null);
   }, []);
 
   let routes;
@@ -32,6 +36,7 @@ const App = () => {
         <Route path="/news/new" exact>
           <NewNews />
         </Route>
+
         <Route path="/users">
           <Users />
         </Route>
@@ -55,7 +60,12 @@ const App = () => {
   return (
     <ThemeProvider>
       <AuthContext.Provider
-        value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}
+        value={{
+          isLoggedIn: isLoggedIn,
+          userId: userId,
+          login: login,
+          logout: logout,
+        }}
       >
         <CSSReset />
         <Router>
@@ -72,6 +82,9 @@ const App = () => {
                   </Heading>
                 </Box>
               </Route> */}
+              <Route path="/1">
+                <UpdateNews />
+              </Route>
               {routes}
             </Switch>
           </main>

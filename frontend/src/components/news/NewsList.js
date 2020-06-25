@@ -10,7 +10,7 @@ const NewsList = (props) => {
       <div className="news-list center">
         <Card>
           <h2>Немає новин. Хочете створити?</h2>
-          <button>Пошитири новину</button>
+          <button>Поширити новину</button>
         </Card>
       </div>
     );
@@ -18,13 +18,13 @@ const NewsList = (props) => {
 
   return (
     <ul className="news-list">
-      {props.items.map((place) => {
+      {props.items.map((news) => {
         <NewsItem
-          key={place.id}
-          id={place.id}
-          title={place.title}
-          description={place.description}
-          creatorId={place.creator}
+          key={news.id}
+          id={news.id}
+          title={news.title}
+          description={news.description}
+          creatorId={news.creator}
         />;
       })}
     </ul>
