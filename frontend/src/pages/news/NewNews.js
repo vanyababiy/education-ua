@@ -4,6 +4,7 @@ import Axios from "axios";
 import { Button, Box, Icon } from "@chakra-ui/core";
 
 import ReactS3Uploader from "react-s3-uploader-multipart";
+import Dante from "Dante2";
 
 import "./NewNews.css";
 import TextareaElement from "../../shared/components/FormElements/TextareaElement";
@@ -30,12 +31,9 @@ const NewNews = () => {
 
   function handleRemove() {
     const values = [...fields];
-    // values.splice(i, 1);
-    // setFields(values);
     values.pop();
     setFields(values);
   }
-
 
   const history = useHistory();
 
@@ -64,6 +62,7 @@ const NewNews = () => {
             size={["4sm", "4md", "4lg", "4xl"]}
             placeholder="Напишіть заголовок..."
           />
+          <Dante />
           {fields.map((field, idx) => {
             return (
               <div key={`${field}-${idx}`}>
